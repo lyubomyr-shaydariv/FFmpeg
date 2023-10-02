@@ -567,6 +567,13 @@ void parse_loglevel(int argc, char **argv, const OptionDef *options)
     idx = locate_option(argc, argv, options, "hide_banner");
     if (idx)
         hide_banner = 1;
+    else {
+        env = getenv_utf8("FFHIDEBANNER");
+        if (env && !strcmp(env, "1")) {
+            hide_banner = 1;
+        }
+        freeenv_utf8(env);
+    }
 }
 
 static const AVOption *opt_find(void *obj, const char *name, const char *unit,
